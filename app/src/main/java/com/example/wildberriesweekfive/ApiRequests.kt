@@ -5,6 +5,6 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiRequests {
-    @GET("{id}")
-    suspend fun getTickets(@Path("id") id: String): SuperHeroJSON
+    @GET("all.json")
+    suspend fun getSuperHeroes(): List<SuperHeroJSON>
 }

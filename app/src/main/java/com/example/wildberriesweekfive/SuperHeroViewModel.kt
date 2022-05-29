@@ -16,12 +16,10 @@ open class SuperHeroViewModel : ViewModel() {
     fun request() {
         job?.cancel()
         job = viewModelScope.launch(Dispatchers.IO) {
-            val listSuperHeroes: MutableList<SuperHeroJSON>? = null
-            for (i in 1..10){
-                val superHero = api.getTickets(i.toString())
-                listSuperHeroes?.add(superHero)
-            }
-            itemsSuperHeroes.postValue(listSuperHeroes?.toList())
+
+            val superHero = api.getSuperHeroes()
+
+            itemsSuperHeroes.postValue(superHero)
 
         }
 

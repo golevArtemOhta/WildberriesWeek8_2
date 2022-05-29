@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitFactory {
     fun new() = Retrofit.Builder()
-        .baseUrl("https://www.superheroapi.com/api.php/3202191630032155/")
+        .baseUrl("https://akabab.github.io/superhero-api/api/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(ApiRequests::class.java)

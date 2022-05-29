@@ -1,15 +1,19 @@
 package com.example.wildberriesweekfive
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wildberriesweekfive.databinding.SuperHeroItemBinding
+import com.squareup.picasso.Picasso
 
 class SuperHeroAdapter : RecyclerView.Adapter<SuperHeroAdapter.SuperHeroHolder>() {
     val SuperHeroesList = ArrayList<SuperHeroJSON>()
-
 
     class SuperHeroHolder(item: View) : RecyclerView.ViewHolder(item) {
         val binding = SuperHeroItemBinding.bind(item)
@@ -17,8 +21,34 @@ class SuperHeroAdapter : RecyclerView.Adapter<SuperHeroAdapter.SuperHeroHolder>(
 
         @SuppressLint("SetTextI18n")
         fun bind(superHero: SuperHeroJSON) = with(binding) {
-            //imAvatar.setImageResource()
+
+            Picasso.with(itemView.context)
+                .load(superHero.images.xs)
+                .into(imAvatar);
+
             tvName.text = superHero.name
+
+            itemView.setOnClickListener(object : View.OnClickListener {
+                override fun onClick(p0: View?) {
+
+                    val activity = p0?.getContext() as AppCompatActivity
+                    val superHeroItemFragment: Fragment = SuperHeroItemFragment()
+                    val bundle = Bundle()
+                    bundle.putString("name", superHero.name)
+                    bundle.putString("image", superHero.images.lg.toString())
+                    bundle.putString("gender", superHero.appearance.gender)
+                    bundle.putString("race", superHero.appearance.race)
+                    bundle.putString("fullName", superHero.biography.fullName)
+                    bundle.putString("placeOfBirth", superHero.biography.placeOfBirth)
+                    bundle.putString("publisher", superHero.biography.publisher)
+
+                    superHeroItemFragment.arguments = bundle
+                    activity.supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment, superHeroItemFragment).addToBackStack(null).commit()
+
+                }
+            })
+
         }
 
     }
@@ -31,6 +61,7 @@ class SuperHeroAdapter : RecyclerView.Adapter<SuperHeroAdapter.SuperHeroHolder>(
 
     override fun onBindViewHolder(holder: SuperHeroHolder, position: Int) {
         holder.bind(SuperHeroesList[position])
+
     }
 
     override fun getItemCount(): Int {
