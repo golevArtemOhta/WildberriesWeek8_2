@@ -2,12 +2,11 @@ package com.example.wildberriesweekfive
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.example.wildberriesweekfive.databinding.FragmentSuperHeroItemBinding
-import com.example.wildberriesweekfive.databinding.SuperHeroItemBinding
 import com.squareup.picasso.Picasso
 
 
@@ -44,7 +43,7 @@ class SuperHeroItemFragment : Fragment() {
             .into(binding.imageView);
 
 
-        with(binding){
+        with(binding) {
             tvNameSecondFragment.text = name
             tvGender.text = "Gender: $gender"
             tvRace.text = "Race: $race"

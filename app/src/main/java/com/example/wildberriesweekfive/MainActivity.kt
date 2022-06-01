@@ -1,7 +1,7 @@
 package com.example.wildberriesweekfive
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.wildberriesweekfive.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
