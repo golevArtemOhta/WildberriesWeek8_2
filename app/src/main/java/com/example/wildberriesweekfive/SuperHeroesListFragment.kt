@@ -1,7 +1,9 @@
 package com.example.wildberriesweekfive
 
 import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +13,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wildberriesweekfive.databinding.FragmentSuperHeroesListBinding
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.lang.reflect.Type
 
 
 class SuperHeroesListFragment : Fragment() {
     lateinit var binding: FragmentSuperHeroesListBinding
     lateinit var superHeroViewModel: SuperHeroViewModel
-    lateinit var superHeroItems: List<SuperHeroJSON>
+    var superHeroItems: List<SuperHeroJSON>? = null
     private val adapter = SuperHeroAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,18 +40,26 @@ class SuperHeroesListFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        readData()
+        if (superHeroItems == null){
             superHeroViewModel.request()
-
+        }
+        else{
+            adapter.getSuperHeroesData(superHeroItems!!)
+            adapter.notifyDataSetChanged()
+        }
 
     }
+
+
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onStart() {
         super.onStart()
         superHeroViewModel.itemsSuperHeroes.observe(activity as LifecycleOwner, Observer {
             superHeroItems = it
-            adapter.getSuperHeroesData(superHeroItems)
+            saveData(superHeroItems!!)
+            adapter.getSuperHeroesData(superHeroItems!!)
             adapter.notifyDataSetChanged()
         })
 
@@ -59,8 +72,30 @@ class SuperHeroesListFragment : Fragment() {
     }
 
     companion object {
-
         @JvmStatic
         fun newInstance() = SuperHeroesListFragment()
+        const val SHARED_PREF = "SHARED_PREF"
+    }
+
+
+    private fun saveData(superHeroes: List<SuperHeroJSON>) {
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+        val editor: SharedPreferences.Editor = sharedPrefs.edit()
+        val gson = Gson()
+
+        val json = gson.toJson(superHeroes)
+
+        editor.putString(SHARED_PREF, json)
+        editor.commit()
+    }
+
+
+
+    fun readData() {
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+        val gson = Gson()
+        val json = sharedPrefs.getString(SHARED_PREF, "")
+        val type = object : TypeToken<List<SuperHeroJSON?>?>() {}.type
+        superHeroItems = gson.fromJson<List<SuperHeroJSON>>(json, type)
     }
 }
