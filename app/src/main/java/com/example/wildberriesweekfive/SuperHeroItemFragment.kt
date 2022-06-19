@@ -57,6 +57,10 @@ class SuperHeroItemFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = SuperHeroItemFragment()
+        fun newInstance(bundle: Bundle) : SuperHeroItemFragment {
+            val fragment = SuperHeroItemFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 }

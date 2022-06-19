@@ -30,8 +30,8 @@ class SuperHeroAdapter : RecyclerView.Adapter<SuperHeroAdapter.SuperHeroHolder>(
             itemView.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(p0: View?) {
 
-                    val activity = p0?.getContext() as AppCompatActivity
-                    val superHeroItemFragment: Fragment = SuperHeroItemFragment()
+
+                    //val superHeroItemFragment: Fragment = SuperHeroItemFragment()
                     val bundle = Bundle()
                     bundle.putString("name", superHero.name)
                     bundle.putString("image", superHero.images.lg.toString())
@@ -41,9 +41,8 @@ class SuperHeroAdapter : RecyclerView.Adapter<SuperHeroAdapter.SuperHeroHolder>(
                     bundle.putString("placeOfBirth", superHero.biography.placeOfBirth)
                     bundle.putString("publisher", superHero.biography.publisher)
 
-                    superHeroItemFragment.arguments = bundle
-                    activity.supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragment, superHeroItemFragment).addToBackStack(null).commit()
+                    //superHeroItemFragment.arguments = bundle
+                    App.INSTANCE.router.navigateTo(Screens.SuperHeroItemScreen(bundle))
 
                 }
             })
