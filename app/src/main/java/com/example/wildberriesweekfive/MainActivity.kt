@@ -1,16 +1,11 @@
 package com.example.wildberriesweekfive
 
-import android.content.ClipData
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import com.example.wildberriesweekfive.databinding.ActivityMainBinding
 import com.github.terrakok.cicerone.androidx.AppNavigator
-import kotlin.math.absoluteValue
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -36,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.info) {
+        if (item.itemId == R.id.info) {
             App.INSTANCE.router.navigateTo(Screens.InfoScreen())
             itemInfo.isVisible = false
         }
@@ -58,10 +53,5 @@ class MainActivity : AppCompatActivity() {
         itemInfo.isVisible = true
     }
 
-//    private fun openFragment() {
-//        supportFragmentManager
-//            .beginTransaction()
-//            .replace(R.id.fragment, SuperHeroesListFragment.newInstance())
-//            .commit()
-//    }
+
 }
