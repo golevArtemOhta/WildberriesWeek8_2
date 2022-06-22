@@ -27,25 +27,19 @@ class SuperHeroAdapter : RecyclerView.Adapter<SuperHeroAdapter.SuperHeroHolder>(
 
             tvName.text = superHero.name
 
-            itemView.setOnClickListener(object : View.OnClickListener {
-                override fun onClick(p0: View?) {
+            itemView.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putString("name", superHero.name)
+                bundle.putString("image", superHero.images.lg.toString())
+                bundle.putString("gender", superHero.appearance.gender)
+                bundle.putString("race", superHero.appearance.race)
+                bundle.putString("fullName", superHero.biography.fullName)
+                bundle.putString("placeOfBirth", superHero.biography.placeOfBirth)
+                bundle.putString("publisher", superHero.biography.publisher)
 
 
-                    //val superHeroItemFragment: Fragment = SuperHeroItemFragment()
-                    val bundle = Bundle()
-                    bundle.putString("name", superHero.name)
-                    bundle.putString("image", superHero.images.lg.toString())
-                    bundle.putString("gender", superHero.appearance.gender)
-                    bundle.putString("race", superHero.appearance.race)
-                    bundle.putString("fullName", superHero.biography.fullName)
-                    bundle.putString("placeOfBirth", superHero.biography.placeOfBirth)
-                    bundle.putString("publisher", superHero.biography.publisher)
-
-                    //superHeroItemFragment.arguments = bundle
-                    App.INSTANCE.router.navigateTo(Screens.SuperHeroItemScreen(bundle))
-
-                }
-            })
+                App.INSTANCE.router.navigateTo(Screens.SuperHeroItemScreen(bundle))
+            }
 
         }
 

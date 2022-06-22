@@ -1,6 +1,7 @@
 package com.example.wildberriesweekfive
 
-import android.app.FragmentManager
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,10 @@ import com.example.wildberriesweekfive.databinding.FragmentInfoBinding
 
 class InfoFragment : Fragment() {
     lateinit var binding: FragmentInfoBinding
+
+    val uri: Uri = Uri.parse("https://github.com/golevArtemOhta")
+    val intent = Intent(Intent.ACTION_VIEW, uri)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -21,6 +26,12 @@ class InfoFragment : Fragment() {
     ): View? {
         binding = FragmentInfoBinding.inflate(inflater)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.textViewGitHub.setOnClickListener {
+            startActivity(intent)
+        }
     }
 
     companion object {
